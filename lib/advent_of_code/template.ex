@@ -1,4 +1,7 @@
 defmodule AdventOfCode.Template do
+  @moduledoc """
+  Template content for solution and test files
+  """
   def build_solution(year, day) do
     """
     defmodule AdventOfCode.Year#{year}.Day#{day} do

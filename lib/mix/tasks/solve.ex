@@ -1,8 +1,10 @@
 defmodule Mix.Tasks.Solve do
+  @moduledoc """
+  Runs and optionally submits solution for specified year, day, and part
+  """
   use Mix.Task
   alias AdventOfCode.Utils
 
-  @shortdoc "Runs and optionally submits solution for specified year, day, and part"
   @impl Mix.Task
   def run(args) do
     {opts, [year, day, part], _} =

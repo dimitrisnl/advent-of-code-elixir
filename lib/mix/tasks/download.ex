@@ -1,4 +1,7 @@
 defmodule Mix.Tasks.Download do
+  @moduledoc """
+  Downloads puzzle input and descriptions
+  """
   use Mix.Task
   alias AdventOfCode.Utils
 

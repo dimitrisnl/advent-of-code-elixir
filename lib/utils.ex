@@ -1,4 +1,7 @@
 defmodule AdventOfCode.Utils do
+  @moduledoc """
+  Common utilities for tasks
+  """
   def setup_env! do
     Dotenvy.source!(".env") |> System.put_env()
     Application.ensure_all_started(:httpoison)
