@@ -4,7 +4,10 @@ defmodule AdventOfCode.Template do
   """
   def build_solution(year, day) do
     """
-    defmodule AdventOfCode.Year#{year}.Day#{day} do
+    defmodule AdventOfCode.Year#{year}.Day#{day}.Solution do
+      @moduledoc \"""
+      Solution for day #{day}
+      \"""
       def part1(input) do
         input
         |> parse(:lines)
@@ -35,20 +38,36 @@ defmodule AdventOfCode.Template do
 
   def build_test(year, day) do
     """
-    defmodule AdventOfCode.Year#{year}.Day#{day}Test do
+    defmodule AdventOfCode.Year#{year}.Day#{day}.SolutionTest do
       use ExUnit.Case
-      alias AdventOfCode.Year#{year}.Day#{day}
+      alias AdventOfCode.Year#{year}.Day#{day}.Solution
 
-      test "part1" do
-        input = \"\"\"
-        \"\"\"
-        assert Day#{day}.part1(input) == nil
+      describe "part1/1" do
+        test "case1" do
+          input = ""
+
+          assert Day#{day}.part1(input) == nil
+        end
+
+        test "case2" do
+          input = ""
+
+          assert Day#{day}.part1(input) == nil
+        end
       end
 
-      test "part2" do
-        input = \"\"\"
-        \"\"\"
-        assert Day#{day}.part2(input) == nil
+      describe "part2/1" do
+        test "case1" do
+          input = ""
+
+          assert Day#{day}.part2(input) == nil
+        end
+
+        test "case2" do
+          input = ""
+
+          assert Day#{day}.part2(input) == nil
+        end
       end
     end
     """

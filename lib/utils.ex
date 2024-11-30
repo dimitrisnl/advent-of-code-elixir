@@ -7,9 +7,16 @@ defmodule AdventOfCode.Utils do
     Application.ensure_all_started(:httpoison)
   end
 
+  def pad_day(day) do
+    String.pad_leading(day, 2, "0")
+  end
+
   def get_base_path(year, day) do
-    padded_day = String.pad_leading(day, 2, "0")
-    "lib/advent_of_code/#{year}/#{padded_day}"
+    "lib/advent_of_code/#{year}/#{pad_day(day)}"
+  end
+
+  def get_test_path(year, day) do
+    "test/#{year}/#{pad_day(day)}"
   end
 
   def http_get(url) do

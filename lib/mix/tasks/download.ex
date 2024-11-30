@@ -9,12 +9,17 @@ defmodule Mix.Tasks.Download do
   @impl Mix.Task
   def run([year, day]) do
     Utils.setup_env!()
+
     base_path = Utils.get_base_path(year, day)
     File.mkdir_p!(base_path)
+
+    test_path = Utils.get_test_path(year, day)
+    File.mkdir_p!(test_path)
 
     download_input(base_path, year, day)
     download_descriptions(base_path, year, day)
     create_solution_file(base_path, year, day)
+    create_test_file(test_path, year, day)
   end
 
   defp download_input(base_path, year, day) do
@@ -54,5 +59,11 @@ defmodule Mix.Tasks.Download do
     content = AdventOfCode.Template.build_solution(year, day)
     File.write!("#{base_path}/solution.ex", content)
     Mix.shell().info("Created solution template")
+  end
+
+  defp create_test_file(base_path, year, day) do
+    content = AdventOfCode.Template.build_test(year, day)
+    File.write!("#{base_path}/solution_test.exs", content)
+    Mix.shell().info("Created test template")
   end
 end

@@ -21,7 +21,7 @@ defmodule Mix.Tasks.Solve do
     function = String.to_atom("part#{part}")
 
     result = apply(module, function, [input])
-    IO.puts("Solution for Year #{year} Day #{day} Part #{part}: #{result}")
+    Mix.shell().info("Solution for Year #{year} Day #{day} Part #{part}: #{result}")
 
     if opts[:submit] do
       submit_solution(year, day, part, result)
@@ -36,7 +36,7 @@ defmodule Mix.Tasks.Solve do
       {:ok, response_body} ->
         {:ok, document} = Floki.parse_document(response_body)
         message = document |> Floki.find("article") |> Floki.text() |> String.trim()
-        IO.puts("\nSubmission response:\n#{message}")
+        Mix.shell().info("\nSubmission response:\n#{message}")
 
       {:error, reason} ->
         Mix.shell().error("Failed to submit - #{reason}")
