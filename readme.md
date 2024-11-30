@@ -39,7 +39,7 @@ mix solve 2024 1 1
 Run and submit the solution
 
 ```sh
-mix run solve 2024 1 1 --submit # or -s
+mix solve 2024 1 1 --submit # or -s
 ```
 
 
