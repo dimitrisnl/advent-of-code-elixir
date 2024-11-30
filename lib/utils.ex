@@ -3,7 +3,10 @@ defmodule AdventOfCode.Utils do
   Common utilities for tasks
   """
   def setup_env! do
-    Dotenvy.source!(".env") |> System.put_env()
+    ".env"
+    |> Dotenvy.source!()
+    |> System.put_env()
+
     Application.ensure_all_started(:httpoison)
   end
 
@@ -17,6 +20,26 @@ defmodule AdventOfCode.Utils do
 
   def get_test_path(year, day) do
     "test/#{year}/#{pad_day(day)}"
+  end
+
+  def download_description(year, day, part) do
+    url = "https://adventofcode.com/#{year}/day/#{day}"
+
+    with {:ok, body} <- http_get(url),
+         {:ok, document} <- Floki.parse_document(body) do
+      case document
+           |> Floki.find("article.day-desc")
+           |> Enum.at(part - 1) do
+        nil ->
+          {:error, "Description part #{part} not found"}
+
+        article ->
+          {:ok,
+           article
+           |> Floki.text()
+           |> String.trim()}
+      end
+    end
   end
 
   def http_get(url) do
