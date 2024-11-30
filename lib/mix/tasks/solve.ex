@@ -1,9 +1,11 @@
 defmodule Mix.Tasks.Solve do
   @moduledoc """
-  Runs solution and optionally submits it
+  Runs solution and optionally submits it, downloading part 2 description if part 1 succeeds
   """
   use Mix.Task
   alias AdventOfCode.Utils
+
+  @valid_parts [:part1, :part2]
 
   @impl Mix.Task
   def run(args) do
@@ -15,10 +17,14 @@ defmodule Mix.Tasks.Solve do
 
     Utils.setup_env!()
     result = execute_solution(year, day, part)
-    display_result(year, day, part, result)
 
-    if opts[:submit] do
-      handle_submission(year, day, part, result)
+    case result do
+      nil ->
+        :ok
+
+      result ->
+        display_result(year, day, part, result)
+        if opts[:submit], do: handle_submission(year, day, part, result)
     end
   end
 
@@ -27,18 +33,35 @@ defmodule Mix.Tasks.Solve do
     input = File.read!("#{base_path}/input.txt")
 
     try do
-      module = Module.safe_concat(["AdventOfCode", "Year#{year}", "Day#{day}", "Solution"])
-      function = String.to_existing_atom("part#{part}")
-      apply(module, function, [input])
+      module =
+        Module.safe_concat([
+          "AdventOfCode",
+          "Year#{year}",
+          "Day#{String.to_integer(day)}",
+          "Solution"
+        ])
+
+      function = :"part#{part}"
+
+      if function in @valid_parts do
+        apply(module, function, [input])
+      else
+        Mix.shell().error("Invalid part number: #{part}")
+        nil
+      end
     rescue
-      ArgumentError ->
-        Mix.shell().error("Solution module or function not found")
+      error in [ArgumentError, UndefinedFunctionError] ->
+        Mix.shell().error("Error: #{Exception.message(error)}")
         nil
     end
   end
 
   defp display_result(year, day, part, result) do
     Mix.shell().info("Solution for Year #{year} Day #{day} Part #{part}: #{result}")
+  end
+
+  defp handle_submission(_year, _day, _part, result) when is_nil(result) do
+    Mix.shell().error("Cannot submit nil result")
   end
 
   defp handle_submission(year, day, part, result) do
