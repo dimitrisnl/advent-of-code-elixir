@@ -31,7 +31,7 @@ defmodule AdventOfCode.Template do
       # Update the parse function to match the input format
       defp parse(input) do
         input
-        |> String.split("\n", trim: true)
+        |> String.split("\\n", trim: true)
       end
     end
     """
