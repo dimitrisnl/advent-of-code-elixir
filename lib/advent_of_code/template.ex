@@ -10,13 +10,13 @@ defmodule AdventOfCode.Template do
       \"""
       def part1(input) do
         input
-        |> parse(:lines)
+        |> parse()
         |> solve_part1()
       end
 
       def part2(input) do
         input
-        |> parse(:lines)
+        |> parse()
         |> solve_part2()
       end
 
@@ -28,10 +28,11 @@ defmodule AdventOfCode.Template do
 
       end
 
-      defp parse(input, :lines), do: String.split(input, "\n", trim: true)
-      defp parse(input, :numbers), do: input |> parse(:lines) |> Enum.map(&String.to_integer/1)
-      defp parse(input, :csv), do: input |> String.trim() |> String.split(",")
-      defp parse(input, :grid), do: input |> parse(:lines) |> Enum.map(&String.graphemes/1)
+      # Update the parse function to match the input format
+      defp parse(input) do
+        input
+        |> String.split("\n", trim: true)
+      end
     end
     """
   end
