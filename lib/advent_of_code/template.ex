@@ -40,7 +40,8 @@ defmodule AdventOfCode.Template do
   def build_test(year, day) do
     """
     defmodule AdventOfCode.Year#{year}.Day#{day}.SolutionTest do
-      use ExUnit.Case
+      use ExUnit.Case, async: true
+
       alias AdventOfCode.Year#{year}.Day#{day}.Solution
 
       describe "part1/1" do

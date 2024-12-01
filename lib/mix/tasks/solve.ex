@@ -41,7 +41,7 @@ defmodule Mix.Tasks.Solve do
           "Solution"
         ])
 
-      function = :"part#{part}"
+      function = String.to_existing_atom("part#{part}")
 
       if function in @valid_parts do
         apply(module, function, [input])

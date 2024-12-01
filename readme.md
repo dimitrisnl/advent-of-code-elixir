@@ -42,12 +42,6 @@ Run and submit the solution
 mix solve 2024 1 1 --submit # or -s
 ```
 
-
-### Next-up
-
-- [ ] Setup the tests
-- [ ] General improvements
-
 ### Contributing
 
 Yes, please

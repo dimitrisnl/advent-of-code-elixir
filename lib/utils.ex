@@ -36,8 +36,9 @@ defmodule AdventOfCode.Utils do
         article ->
           {:ok,
            article
-           |> Floki.text()
-           |> String.trim()}
+           |> Floki.raw_html()
+           |> String.trim()
+           |> Html2Markdown.convert()}
       end
     end
   end
